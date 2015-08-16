@@ -88,6 +88,9 @@ echo "-----> Pre-launching Meteor to create packages assets and prevent bundling
 fi
 # </hack>
 
+echo "-----> Installing TypeScript"
+npm install -g typescript
+
 echo "-----> Installing dependencies"
 # If we use npm, run npm install.
 if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
