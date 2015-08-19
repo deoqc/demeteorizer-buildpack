@@ -75,13 +75,12 @@ METEOR="$METEOR_DIR/.meteor/meteor" # The meteor binary.
 echo "-----> Bundling bundle"
 cd $APP_SOURCE_DIR
 
-echo "-----> Copying definitions: $APP_SOURCE_DIR/lib/typescript/package_defs"
-rm lib/typescript/package_defs
-cp .meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions lib/typescript/package_defs
-
 # Now on to bundling. Don't put the bundle in $APP_CHECKOUT_DIR, or it will
 # recurse, trying to bundle up its own bundling.
 BUNDLE_DEST=`mktemp -d "$BUILDPACK_DIR/build-XXXX"`
+
+pwd
+ls -la
 
 # <hack issue="https://github.com/meteor/meteor/issues/2796>
 # the root cause seems to be related to https://github.com/meteor/meteor/issues/2606
@@ -101,10 +100,23 @@ if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
   cd "$COMPILE_DIR"/app/programs/server && npm install
 fi
 
+pwd
+ls -la
+
+echo "-----> Copying definitions: $APP_SOURCE_DIR/lib/typescript/package_defs"
+rm lib/typescript/package_defs
+cp .meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions lib/typescript/package_defs
+
+pwd
+ls -la
+
 echo "-----> Building Meteor with ROOT_URL: $ROOT_URL"
 HOME=$METEOR_DIR $METEOR build --server $ROOT_URL --directory $BUNDLE_DEST
 mv $BUNDLE_DEST/bundle "$COMPILE_DIR/app"
 rmdir $BUNDLE_DEST
+
+pwd
+ls -la
 
 #
 # Environment
