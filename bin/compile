@@ -75,9 +75,9 @@ METEOR="$METEOR_DIR/.meteor/meteor" # The meteor binary.
 echo "-----> Bundling bundle"
 cd $APP_SOURCE_DIR
 
-echo "-----> Creating symlink: $APP_SOURCE_DIR/lib/typescript/package_defs"
+echo "-----> Copying definitions: $APP_SOURCE_DIR/lib/typescript/package_defs"
 rm lib/typescript/package_defs
-ln -s .meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions lib/typescript/package_defs
+cp .meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions lib/typescript/package_defs
 
 # Now on to bundling. Don't put the bundle in $APP_CHECKOUT_DIR, or it will
 # recurse, trying to bundle up its own bundling.
