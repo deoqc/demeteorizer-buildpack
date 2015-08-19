@@ -80,14 +80,7 @@ cd $APP_SOURCE_DIR
 BUNDLE_DEST=`mktemp -d "$BUILDPACK_DIR/build-XXXX"`
 
 pwd
-ls -la
-
-cd lib
-ls -la
-
-cd ../.meteor
-ls -la
-cd ..
+ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
 # <hack issue="https://github.com/meteor/meteor/issues/2796>
 # the root cause seems to be related to https://github.com/meteor/meteor/issues/2606
