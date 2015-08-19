@@ -59,6 +59,9 @@ export npm_config_prefix="$COMPILE_DIR"
 export CPATH="$COMPILE_DIR"/include
 export CPPPATH="$CPATH"
 
+echo "-----> Installing TypeScript"
+npm install -g typescript
+
 #
 # Install meteor
 #
@@ -87,9 +90,6 @@ echo "-----> Pre-launching Meteor to create packages assets and prevent bundling
     HOME=$METEOR_DIR timeout -s9 60 $METEOR --settings settings.json || true
 fi
 # </hack>
-
-echo "-----> Installing TypeScript"
-npm install -g typescript
 
 echo "-----> Installing dependencies"
 # If we use npm, run npm install.
