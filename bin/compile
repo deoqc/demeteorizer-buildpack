@@ -101,7 +101,7 @@ if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
 fi
 
 pwd
-ls -la
+ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
 echo "-----> Copying definitions: $APP_SOURCE_DIR/lib/typescript/package_defs"
 rm lib/typescript/package_defs
