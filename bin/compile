@@ -82,6 +82,13 @@ BUNDLE_DEST=`mktemp -d "$BUILDPACK_DIR/build-XXXX"`
 pwd
 ls -la
 
+cd lib
+ls -la
+
+cd ../.meteor
+ls -la
+cd ..
+
 # <hack issue="https://github.com/meteor/meteor/issues/2796>
 # the root cause seems to be related to https://github.com/meteor/meteor/issues/2606
 # Also remember to use 'heroku stack:set cedar-14' to allow certain recompiled
