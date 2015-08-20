@@ -94,7 +94,7 @@ fi
 echo "-----> Getting TypeScript definitions"
 git clone https://github.com/meteor-typescript/meteor-typescript-libs.git
 rm lib/typescript/package_defs
-cp meteor-typescript-libs/definitions lib/typescript/package_defs
+cp -r meteor-typescript-libs/definitions lib/typescript/package_defs
 
 pwd
 ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
