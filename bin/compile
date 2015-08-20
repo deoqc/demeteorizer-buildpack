@@ -62,14 +62,6 @@ export CPPPATH="$CPATH"
 echo "-----> Installing TypeScript"
 npm install -g typescript
 
-echo "-----> Getting definitions"
-git clone https://github.com/meteor-typescript/meteor-typescript-libs.git
-rm lib/typescript/package_defs
-ln -s meteor-typescript-libs/definitions lib/typescript/package_defs
-
-pwd
-ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-
 #
 # Install meteor
 #
@@ -98,6 +90,14 @@ echo "-----> Pre-launching Meteor to create packages assets and prevent bundling
     HOME=$METEOR_DIR timeout -s9 60 $METEOR --settings settings.json || true
 fi
 # </hack>
+
+echo "-----> Getting TypeScript definitions"
+git clone https://github.com/meteor-typescript/meteor-typescript-libs.git
+rm lib/typescript/package_defs
+ln -s meteor-typescript-libs/definitions lib/typescript/package_defs
+
+pwd
+ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
 echo "-----> Installing dependencies"
 # If we use npm, run npm install.
