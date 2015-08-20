@@ -97,6 +97,18 @@ if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
   cd "$COMPILE_DIR"/app/programs/server && npm install
 fi
 
+echo "-----> Installing packages"
+while read p; do
+  case "$p" in
+    \#*)
+      continue;;
+    "")
+      continue;;
+  esac
+  echo "Adding $p"
+  $METEOR add $p
+done <.meteor/packages
+
 echo "-----> Building Meteor with ROOT_URL: $ROOT_URL"
 HOME=$METEOR_DIR $METEOR build --server $ROOT_URL --directory $BUNDLE_DEST
 mv $BUNDLE_DEST/bundle "$COMPILE_DIR/app"
