@@ -62,6 +62,14 @@ export CPPPATH="$CPATH"
 echo "-----> Installing TypeScript"
 npm install -g typescript
 
+echo "-----> Getting definitions"
+git clone https://github.com/meteor-typescript/meteor-typescript-libs.git
+rm lib/typescript/package_defs
+ln -s meteor-typescript-libs/definitions lib/typescript/package_defs
+
+pwd
+ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+
 #
 # Install meteor
 #
@@ -97,29 +105,10 @@ if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
   cd "$COMPILE_DIR"/app/programs/server && npm install
 fi
 
-echo "-----> Installing packages"
-while read p; do
-  case "$p" in
-    \#*)
-      continue;;
-    "")
-      continue;;
-  esac
-  echo "Adding $p"
-  $METEOR add $p
-done <.meteor/packages
-
 echo "-----> Building Meteor with ROOT_URL: $ROOT_URL"
 HOME=$METEOR_DIR $METEOR build --server $ROOT_URL --directory $BUNDLE_DEST
 mv $BUNDLE_DEST/bundle "$COMPILE_DIR/app"
 rmdir $BUNDLE_DEST
-
-pwd
-ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-
-echo "-----> Copying definitions: $APP_SOURCE_DIR/lib/typescript/package_defs"
-rm lib/typescript/package_defs
-cp .meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions lib/typescript/package_defs
 
 pwd
 ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
