@@ -3,9 +3,9 @@
 # Meteor Heroku buildpack for Meteor 0.9.3+.
 
 # fail fast.
-set -e
+#set -e
 # debug verbosely.
-#set -x
+set -x
 
 #Load config vars into environment (from https://devcenter.heroku.com/articles/buildpack-api)
 export_env_dir() {
@@ -59,15 +59,18 @@ export npm_config_prefix="$COMPILE_DIR"
 export CPATH="$COMPILE_DIR"/include
 export CPPPATH="$CPATH"
 
-echo "-----> Installing TypeScript"
-npm install -g typescript
+#echo "-----> Installing TypeScript"
+#npm install -g typescript
+
+echo "-----> Installing Demeteorizer"
+npm install -g demeteorizer
 
 #
 # Install meteor
 #
-echo "-----> Installing meteor"
-curl -sS https://install.meteor.com | HOME="$METEOR_DIR" /bin/sh
-METEOR="$METEOR_DIR/.meteor/meteor" # The meteor binary.
+#echo "-----> Installing meteor"
+#curl -sS https://install.meteor.com | HOME="$METEOR_DIR" /bin/sh
+#METEOR="$METEOR_DIR/.meteor/meteor" # The meteor binary.
 
 #
 # Build the meteor app!
@@ -84,11 +87,11 @@ BUNDLE_DEST=`mktemp -d "$BUILDPACK_DIR/build-XXXX"`
 # Also remember to use 'heroku stack:set cedar-14' to allow certain recompiled
 # packages to use the newer version memcpy that ships with a more recent version
 # of glibc (contained in cedar-14)
-if [ -n "${BUILDPACK_PRELAUNCH_METEOR+1}" ]; then
-echo "-----> Pre-launching Meteor to create packages assets and prevent bundling from failing"
-    HOME=$METEOR_DIR $METEOR remove-platform ios android
-    HOME=$METEOR_DIR timeout -s9 60 $METEOR --settings settings.json || true
-fi
+#if [ -n "${BUILDPACK_PRELAUNCH_METEOR+1}" ]; then
+#echo "-----> Pre-launching Meteor to create packages assets and prevent bundling from failing"
+#    HOME=$METEOR_DIR $METEOR remove-platform ios android
+#    HOME=$METEOR_DIR timeout -s9 60 $METEOR --settings settings.json || true
+#fi
 # </hack>
 
 #echo "-----> Getting TypeScript definitions"
@@ -101,11 +104,16 @@ fi
 #pwd
 #ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
+echo "-----> Demeteorizing"
+demeteorizer
+
 echo "-----> Installing dependencies"
+cd .demeteorized
+npm install
 # If we use npm, run npm install.
-if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
-  cd "$COMPILE_DIR"/app/programs/server && npm install
-fi
+#if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
+#  cd "$COMPILE_DIR"/app/programs/server && npm install
+#fi
 
 echo "-----> Building Meteor with ROOT_URL: $ROOT_URL"
 HOME=$METEOR_DIR $METEOR build --server $ROOT_URL --directory $BUNDLE_DEST
