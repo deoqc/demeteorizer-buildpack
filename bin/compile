@@ -91,22 +91,15 @@ echo "-----> Pre-launching Meteor to create packages assets and prevent bundling
 fi
 # </hack>
 
-echo "-----> Getting TypeScript definitions"
+#echo "-----> Getting TypeScript definitions"
 #git clone https://github.com/meteor-typescript/meteor-typescript-libs.git
 
-$METEOR remove meteortypescript:typescript-libs
-$METEOR add meteortypescript:typescript-libs
-
-pwd
-ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-
-rm lib/typescript/package_defs
-cp -r .meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions lib/typescript/package_defs
+#rm lib/typescript/package_defs
 #mv meteor-typescript-libs/definitions lib/typescript/package_defs
 #rm -r meteor-typescript-libs
 
-pwd
-ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+#pwd
+#ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
 echo "-----> Installing dependencies"
 # If we use npm, run npm install.
