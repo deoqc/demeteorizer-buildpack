@@ -3,9 +3,9 @@
 # Meteor Heroku buildpack for Meteor 0.9.3+.
 
 # fail fast.
-#set -e
+set -e
 # debug verbosely.
-set -x
+#set -x
 
 #Load config vars into environment (from https://devcenter.heroku.com/articles/buildpack-api)
 export_env_dir() {
@@ -92,10 +92,10 @@ fi
 # </hack>
 
 echo "-----> Getting TypeScript definitions"
-git clone https://github.com/meteor-typescript/meteor-typescript-libs.git
+#git clone https://github.com/meteor-typescript/meteor-typescript-libs.git
 
-meteor remove meteortypescript:typescript-libs
-meteor add meteortypescript:typescript-libs
+$METEOR remove meteortypescript:typescript-libs
+$METEOR add meteortypescript:typescript-libs
 
 rm lib/typescript/package_defs
 cp .meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions package_defs lib/typescript/package_defs
