@@ -98,7 +98,7 @@ $METEOR remove meteortypescript:typescript-libs
 $METEOR add meteortypescript:typescript-libs
 
 rm lib/typescript/package_defs
-cp .meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions package_defs lib/typescript/package_defs
+cp -r .meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions package_defs lib/typescript/package_defs
 #mv meteor-typescript-libs/definitions lib/typescript/package_defs
 #rm -r meteor-typescript-libs
 
