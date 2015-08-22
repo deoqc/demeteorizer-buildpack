@@ -94,7 +94,8 @@ fi
 echo "-----> Getting TypeScript definitions"
 git clone https://github.com/meteor-typescript/meteor-typescript-libs.git
 rm lib/typescript/package_defs
-cp -r meteor-typescript-libs/definitions lib/typescript/package_defs
+mv meteor-typescript-libs/definitions lib/typescript/package_defs
+rm -r meteor-typescript-libs
 
 pwd
 ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
@@ -111,6 +112,7 @@ mv $BUNDLE_DEST/bundle "$COMPILE_DIR/app"
 rmdir $BUNDLE_DEST
 
 pwd
+ls -la
 ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
 #
