@@ -106,20 +106,20 @@ fi
 #ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
 echo "-----> Demeteorizing"
-demeteorizer
+demeteorizer --output $BUNDLE_DEST
 
 echo "-----> Installing dependencies"
-cd .demeteorized
+cd $BUNDLE_DEST
 npm install
 # If we use npm, run npm install.
 #if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
 #  cd "$COMPILE_DIR"/app/programs/server && npm install
 #fi
 
-echo "-----> Building Meteor with ROOT_URL: $ROOT_URL"
-HOME=$METEOR_DIR $METEOR build --server $ROOT_URL --directory $BUNDLE_DEST
-mv $BUNDLE_DEST/bundle "$COMPILE_DIR/app"
-rmdir $BUNDLE_DEST
+#echo "-----> Building Meteor with ROOT_URL: $ROOT_URL"
+#HOME=$METEOR_DIR $METEOR build --server $ROOT_URL --directory $BUNDLE_DEST
+mv $BUNDLE_DEST "$COMPILE_DIR/app"
+#rmdir $BUNDLE_DEST
 
 pwd
 ls -la
