@@ -1,22 +1,25 @@
 # Demeteorizer Buildpack
 
-A heroku buildpack for Meteor v0.9.3+ (including 1.0 and up), using meteor's
-native packaging system and designed to be as simple and readable as possible.
+A fork of the popular [Meteor Buildpack Horse](https://github.com/AdmitHub/meteor-buildpack-horse) that uses [Demeteorizer](https://github.com/onmodulus/demeteorizer) to allow installing a TypeScript app.
 
 To use this with your meteor app and heroku:
 
 1. Set up your app to [deploy to heroku with git](https://devcenter.heroku.com/articles/git).
 2. Set this repository as the buildpack URL:
 
-        heroku buildpacks:set https://github.com/AdmitHub/meteor-buildpack-horse.git
+        heroku buildpacks:set https://github.com/dominikmayer/demeteorizer-buildpack.git
 
-3. Add the MongoLab addon:
+3. If it isn't set already, be sure to set the ``ROOT_URL`` for meteor (replace URL with whatever is appropriate):
+
+        heroku config:set ROOT_URL=https://<yourapp>.herokuapp.com
+
+4. If you don't yet have a MongoDB, add the MongoLab addon:
 
         heroku addons:create mongolab
 
-4. If it isn't set already, be sure to set the ``ROOT_URL`` for meteor (replace URL with whatever is appropriate):
+   Otherwiese, make sure to set the `MONGO_URL`:
 
-        heroku config:set ROOT_URL=https://<yourapp>.herokuapp.com
+        heroku config:set MONGO_URL=mongodb://<your MongoDB>
 
 Once that's done, you can deploy your app using this build pack any time by pushing to heroku:
 
@@ -53,11 +56,3 @@ a while to have it fixed. In the meanwhile you can circumvent the problem by set
 the following variable in your Heroku Config Vars:
 
     BUILDPACK_PRELAUNCH_METEOR
-
-## Why horse?
-
-There are a gazillian forks and branches of various buildpacks remixing the
-words "heroku", "buildpack", and "meteor", many of which are abandoned or
-outdated or broken, and it's really hard to keep them straight.
-
-So this one is the horse one.
