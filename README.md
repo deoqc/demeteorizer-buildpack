@@ -1,6 +1,12 @@
 # Demeteorizer Buildpack
 
-A fork of the popular [Meteor Buildpack Horse](https://github.com/AdmitHub/meteor-buildpack-horse) that uses [Demeteorizer](https://github.com/onmodulus/demeteorizer) to allow installing a TypeScript app.
+A fork of the popular [Meteor Buildpack Horse](https://github.com/AdmitHub/meteor-buildpack-horse) that uses [Demeteorizer](https://github.com/onmodulus/demeteorizer) to allow installing a [TypeScript](http://typescriptlang.org) app. (It should also work with non-TypeScript apps.)
+
+## Prepare your app
+
+The buildpack assumes, that all definition files are part of your code. So if you you're using the [Meteor TypeScript libraries](meteor-typescript/meteor-typescript-libs) make sure to copy the definitions.
+
+## Setup deployment
 
 To use this with your meteor app and heroku:
 
