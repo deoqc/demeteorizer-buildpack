@@ -1,9 +1,7 @@
-# Meteor Buildpack Horse
+# Demeteorizer Buildpack
 
 A heroku buildpack for Meteor v0.9.3+ (including 1.0 and up), using meteor's
 native packaging system and designed to be as simple and readable as possible.
-
-*NOTE: previous versious of this buildpack used Compose (aka MongoHQ) which no longer offers a free tier to heroku users. If you still need MongoHQ, use the [MongoHQ branch](https://github.com/AdmitHub/meteor-buildpack-horse/tree/mongohq).*
 
 To use this with your meteor app and heroku:
 
@@ -13,7 +11,7 @@ To use this with your meteor app and heroku:
         heroku buildpacks:set https://github.com/AdmitHub/meteor-buildpack-horse.git
 
 3. Add the MongoLab addon:
-        
+
         heroku addons:create mongolab
 
 4. If it isn't set already, be sure to set the ``ROOT_URL`` for meteor (replace URL with whatever is appropriate):
@@ -28,7 +26,7 @@ Once that's done, you can deploy your app using this build pack any time by push
 
 The basic buildpack should function correctly for any normal-ish meteor app,
 with or without npm-container.  For extra steps needed for your particular build,
-just add shell scripts to the "extras" folder and they will get sourced into the 
+just add shell scripts to the "extras" folder and they will get sourced into the
 build.
 
 Extras included in this branch:
@@ -46,14 +44,14 @@ subdirectories.  Those directories are added to ``$PATH`` and
 So ``$COMPILE_DIR/bin`` etc are great places to put any extra binaries or stuff
 if you need to in custom extras.
 
-## Workarounds 
+## Workarounds
 
-Meteor is under active developement, recent changes in its core broke support for 
+Meteor is under active developement, recent changes in its core broke support for
 certain meteor packages designed to access their own assets at first run. The issue
-has been reported on https://github.com/meteor/meteor/issues/2606, but it may take 
-a while to have it fixed. In the meanwhile you can circumvent the problem by setting 
+has been reported on https://github.com/meteor/meteor/issues/2606, but it may take
+a while to have it fixed. In the meanwhile you can circumvent the problem by setting
 the following variable in your Heroku Config Vars:
-   
+
     BUILDPACK_PRELAUNCH_METEOR
 
 ## Why horse?

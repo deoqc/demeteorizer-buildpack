@@ -7,6 +7,7 @@ set -e
 # debug verbosely.
 #set -x
 
+echo "-----> Setting up environment"
 #Load config vars into environment (from https://devcenter.heroku.com/articles/buildpack-api)
 export_env_dir() {
     env_dir=$1
@@ -48,8 +49,9 @@ mkdir -p "$APP_CHECKOUT_DIR" "$METEOR_DIR" "$COMPILE_DIR"
 PATH="$COMPILE_DIR/bin:$PATH"
 
 #
-# Install node
+# Installing
 #
+
 echo "-----> Installing node"
 NODE_VERSION=`curl -sS --get https://semver.io/node/resolve/0.10.x`
 NODE_URL="http://s3pository.heroku.com/node/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz"
@@ -65,9 +67,6 @@ npm install -g typescript
 echo "-----> Installing Demeteorizer"
 npm install -g demeteorizer
 
-#
-# Install meteor
-#
 echo "-----> Installing meteor"
 curl -sS https://install.meteor.com | HOME="$METEOR_DIR" /bin/sh
 METEOR="$METEOR_DIR/.meteor/meteor" # The meteor binary.
@@ -95,35 +94,15 @@ echo "-----> Pre-launching Meteor to create packages assets and prevent bundling
 fi
 # </hack>
 
-#echo "-----> Getting TypeScript definitions"
-#git clone https://github.com/meteor-typescript/meteor-typescript-libs.git
-
-#rm lib/typescript/package_defs
-#mv meteor-typescript-libs/definitions lib/typescript/package_defs
-#rm -r meteor-typescript-libs
-
-#pwd
-#ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-
 echo "-----> Demeteorizing"
 demeteorizer --output $BUNDLE_DEST
 
 echo "-----> Installing dependencies"
 cd $BUNDLE_DEST
 npm install
-# If we use npm, run npm install.
-#if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
-#  cd "$COMPILE_DIR"/app/programs/server && npm install
-#fi
 
-#echo "-----> Building Meteor with ROOT_URL: $ROOT_URL"
-#HOME=$METEOR_DIR $METEOR build --server $ROOT_URL --directory $BUNDLE_DEST
+echo "-----> Moving bundle"
 mv $BUNDLE_DEST "$COMPILE_DIR/app"
-#rmdir $BUNDLE_DEST
-
-pwd
-ls -la
-ls -aR | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
 #
 # Environment
