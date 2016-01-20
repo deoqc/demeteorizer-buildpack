@@ -1,3 +1,8 @@
 #!/bin/sh
 
-echo "Node.js" && exit 0
+if [ -d $1/.meteor ]; then
+  echo "meteor"
+  exit 0
+else
+  exit 1
+fi
