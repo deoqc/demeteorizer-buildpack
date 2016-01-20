@@ -55,9 +55,6 @@ export npm_config_prefix="$COMPILE_DIR"
 export CPATH="$COMPILE_DIR"/include
 export CPPPATH="$CPATH"
 
-echo "-----> Installing TypeScript"
-npm install -g typescript
-
 echo "-----> Installing Demeteorizer"
 npm install -g demeteorizer
 
