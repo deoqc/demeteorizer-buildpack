@@ -30,12 +30,6 @@ BUILDPACK_DIR=$(cd -P -- "$(dirname -- "$0")" && cd .. && pwd -P)
 APP_CHECKOUT_DIR=$1
 # Where the Meteor app source code is located
 APP_SOURCE_DIR="$APP_CHECKOUT_DIR"
-# The Iron scaffolding tool (https://github.com/iron-meteor/iron-cli) place the
-# Meteor app in /app/ instead of in the root. So let's try the /app/ folder if
-# there is no Meteor app in the root.
-if [ ! -d "$APP_SOURCE_DIR/.meteor" ] && [ -d "$APP_SOURCE_DIR/app/.meteor" ]; then
-  APP_SOURCE_DIR="$APP_SOURCE_DIR/app/"
-fi
 # Where we will install meteor. Has to be outside the APP_CHECKOUT_DIR.
 METEOR_DIR=`mktemp -d "$BUILDPACK_DIR"/meteor-XXXX`
 # Where we'll put things we compile.
